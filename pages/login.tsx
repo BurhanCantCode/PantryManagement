@@ -4,9 +4,9 @@ import { FaLock } from 'react-icons/fa';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import AuthModal from '../components/AuthModal';
-import PasswordReset from '../components/PasswordReset';
+import SignIn from '../components/SignIn';
 import SignUp from '../components/SignUp';
+import PasswordReset from '../components/PasswordReset';
 
 const Login: NextPage = () => {
   const { user, redirectAfterAuth } = useAuth();
@@ -44,7 +44,7 @@ const Login: NextPage = () => {
           <Tab label="Sign Up" />
           <Tab label="Forgot Password" />
         </Tabs>
-        {tabIndex === 0 && <AuthModal />}
+        {tabIndex === 0 && <SignIn />}
         {tabIndex === 1 && <SignUp />}
         {tabIndex === 2 && <PasswordReset />}
       </Paper>
