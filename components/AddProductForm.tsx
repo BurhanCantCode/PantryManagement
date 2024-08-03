@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextField, Button, Box, Typography, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { TextField, Button, Box, Typography, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, Snackbar, Alert } from '@mui/material';
 import { useProducts } from '../hooks/useProducts';
 import ImageCapture from './ImageCapture';
 import { scanProduct } from '../utils/visionUtils';
@@ -12,6 +12,7 @@ const AddProductForm = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [potentialLabels, setPotentialLabels] = useState<string[]>([]);
+  const [success, setSuccess] = useState(false);
   const { addProduct } = useProducts();
 
   const handleImageCapture = async (imageData: string) => {
@@ -53,6 +54,7 @@ const AddProductForm = () => {
     setName('');
     setQuantity('');
     setPrediction(null);
+    setSuccess(true);
   };
 
   return (
@@ -114,6 +116,12 @@ const AddProductForm = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar open={success} autoHideDuration={6000} onClose={() => setSuccess(false)}>
+        <Alert onClose={() => setSuccess(false)} severity="success" sx={{ width: '100%' }}>
+          Product added successfully!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

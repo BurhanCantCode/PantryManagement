@@ -1,10 +1,14 @@
 import { NextPage } from 'next';
-import { Typography, Button, Box, Paper } from '@mui/material';
+import { Typography, Button, Box, Paper, Container, TextField, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, Snackbar, Alert } from '@mui/material';
 import AuthModal from '../components/AuthModal';
 import { FaLock } from 'react-icons/fa';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useProducts } from '../hooks/useProducts';
+import ImageCapture from './ImageCapture';
+import { scanProduct } from '../utils/visionUtils';
 
 const Login: NextPage = () => {
   const { user, redirectAfterAuth } = useAuth();
