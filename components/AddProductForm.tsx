@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TextField, Button, Box, Typography, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, Snackbar, Alert } from '@mui/material';
 import { useProducts } from '../hooks/useProducts';
-import ImageCapture from '../components/ImageCapture'; // Corrected import path
+import ImageCapture from '../components/ImageCapture';
 import { scanProduct } from '../utils/visionUtils';
 
 const AddProductForm = () => {
