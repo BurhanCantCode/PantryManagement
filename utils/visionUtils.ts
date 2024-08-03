@@ -1,6 +1,10 @@
 import vision from '@google-cloud/vision';
 
-let client: vision.ImageAnnotatorClient;
+interface VisionClient {
+  labelDetection: (request: { image: { content: Buffer } }) => Promise<{ labelAnnotations: { description: string, score: number }[] }[]>;
+}
+
+let client: VisionClient;
 
 try {
   const clientEmail = process.env.EMAIL;
@@ -15,11 +19,11 @@ try {
     private_key: privateKey,
   };
 
-  client = new vision.ImageAnnotatorClient({ credentials });
+  client = new vision.ImageAnnotatorClient({ credentials }) as VisionClient;
 } catch (error) {
   console.error('Error parsing Google Cloud credentials:', error);
   // Initialize with default credentials as a fallback
-  client = new vision.ImageAnnotatorClient();
+  client = new vision.ImageAnnotatorClient() as VisionClient;
 }
 
 export const scanProduct = async (imageData: string): Promise<{ name: string; quantity: number; allLabels: string[] }> => {
