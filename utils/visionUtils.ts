@@ -1,12 +1,20 @@
 import vision from '@google-cloud/vision';
 
-let client: any;
+let client: vision.ImageAnnotatorClient;
 
 try {
+  const clientEmail = process.env.EMAIL;
+  const privateKey = process.env.PRIVATE_KEY?.replace(/\\n/g, '\n');
+
+  if (!clientEmail || !privateKey) {
+    throw new Error('Missing required environment variables for Google Cloud credentials');
+  }
+
   const credentials = {
-    client_email: process.env.EMAIL,
-    private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+    client_email: clientEmail,
+    private_key: privateKey,
   };
+
   client = new vision.ImageAnnotatorClient({ credentials });
 } catch (error) {
   console.error('Error parsing Google Cloud credentials:', error);
