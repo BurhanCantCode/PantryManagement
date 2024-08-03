@@ -33,7 +33,7 @@ const Footer = () => {
               </IconButton>
               <IconButton
                 component="a"
-                href="www.linkedin.com/in/burhankhatri"
+                href="https://linkedin.com/in/burhankhatri"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
