@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useProducts } from '../hooks/useProducts';
-import ImageCapture from './ImageCapture';
+import ImageCapture from '../components/ImageCapture';
 import { scanProduct } from '../utils/visionUtils';
 
 const Login: NextPage = () => {
