@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { Typography, Button, Grid, Paper, Box } from '@mui/material';
+import { Typography, Button, Grid, Paper, Box, Container } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
 import InventoryStats from '../components/InventoryStats';
 import Link from 'next/link';
@@ -9,11 +9,11 @@ const Home: NextPage = () => {
   const { user } = useAuth();
 
   return (
-    <Box>
-      <Typography variant="h2" component="h1" gutterBottom align="center">
+    <Container maxWidth="md" sx={{ textAlign: 'center', mt: 8 }}>
+      <Typography variant="h2" component="h1" gutterBottom>
         Welcome to Pantry Manager
       </Typography>
-      <Typography variant="h5" align="center" color="textSecondary" paragraph>
+      <Typography variant="h5" color="textSecondary" paragraph>
         Efficiently manage your pantry, reduce waste, and never run out of essentials again.
       </Typography>
       
@@ -56,7 +56,7 @@ const Home: NextPage = () => {
           </Grid>
         </>
       ) : (
-        <Box sx={{ mt: 4, textAlign: 'center' }}>
+        <Box sx={{ mt: 4 }}>
           <Link href="/login" passHref>
             <Button variant="contained" color="primary" size="large">
               Get Started
@@ -64,7 +64,7 @@ const Home: NextPage = () => {
           </Link>
         </Box>
       )}
-    </Box>
+    </Container>
   );
 };
 
