@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useProducts } from '../hooks/useProducts';
 import ImageCapture from '../components/ImageCapture';
 import { scanProduct } from '../utils/visionUtils';
+import PasswordReset from '../components/PasswordReset';
 
 const Login: NextPage = () => {
   const { user, redirectAfterAuth } = useAuth();
@@ -37,6 +38,7 @@ const Login: NextPage = () => {
           Sign in to manage your pantry, reduce waste, and never run out of essentials.
         </Typography>
         <AuthModal />
+        <PasswordReset />
       </Paper>
     </Box>
   );
