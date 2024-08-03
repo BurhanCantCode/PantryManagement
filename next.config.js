@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+require('dotenv').config();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,6 +13,14 @@ const nextConfig = {
     NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
     NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
     NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+    CLIENT_ID: process.env.CLIENT_ID,
+    CLIENT_SECRET: process.env.CLIENT_SECRET,
+    API_KEY: process.env.API_KEY,
+    EMAIL: process.env.EMAIL,
+    UNIQUE_ID: process.env.UNIQUE_ID,
+    PROJECT_ID: process.env.PROJECT_ID,
+    PRIVATE_KEY_ID: process.env.PRIVATE_KEY_ID,
+    PRIVATE_KEY: process.env.PRIVATE_KEY,
   },
   webpack: (config, { dev, isServer }) => {
     if (!isServer) {

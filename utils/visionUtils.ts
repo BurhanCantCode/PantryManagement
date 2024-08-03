@@ -1,11 +1,18 @@
 import vision from '@google-cloud/vision';
-import path from 'path';
 
-const client = new vision.ImageAnnotatorClient({
-  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS 
-    ? path.resolve(process.cwd(), process.env.GOOGLE_APPLICATION_CREDENTIALS)
-    : undefined,
-});
+let client: vision.ImageAnnotatorClient;
+
+try {
+  const credentials = {
+    client_email: process.env.EMAIL,
+    private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+  };
+  client = new vision.ImageAnnotatorClient({ credentials });
+} catch (error) {
+  console.error('Error parsing Google Cloud credentials:', error);
+  // Initialize with default credentials as a fallback
+  client = new vision.ImageAnnotatorClient();
+}
 
 export const scanProduct = async (imageData: string): Promise<{ name: string; quantity: number; allLabels: string[] }> => {
   try {
@@ -23,26 +30,34 @@ export const scanProduct = async (imageData: string): Promise<{ name: string; qu
     
     // Filter out generic labels
     const specificLabels = labels.filter(label => 
-      !['Food', 'Produce', 'Natural foods', 'Fruit', 'Vegetable'].includes(label.description)
+      label.description && !['Food', 'Produce', 'Natural foods', 'Fruit', 'Vegetable'].includes(label.description)
     );
 
     if (specificLabels.length > 0) {
       // Use the most confident specific label
-      const productName = specificLabels[0].description;
+      const productName = specificLabels[0].description || 'Unknown Product';
       
       // Log all labels for debugging
       console.log('All labels:', labels.map(l => `${l.description} (${l.score})`).join(', '));
       
-      return { name: productName, quantity: 1, allLabels: labels.map(label => label.description || '').filter(Boolean) };
+      return { 
+        name: productName, 
+        quantity: 1, 
+        allLabels: labels.map(label => label.description || '').filter(Boolean) 
+      };
     } else if (labels.length > 0) {
       // If no specific labels, use the most confident general label
-      const productName = labels[0].description;
-      return { name: productName, quantity: 1, allLabels: labels.map(label => label.description || '').filter(Boolean) };
+      const productName = labels[0].description || 'Unknown Product';
+      return { 
+        name: productName, 
+        quantity: 1, 
+        allLabels: labels.map(label => label.description || '').filter(Boolean) 
+      };
     } else {
       throw new Error('No labels detected in the image');
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error in scanProduct:', error);
-    throw new Error(`Failed to scan product: ${error.message}`);
+    throw new Error(`Failed to scan product: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 };

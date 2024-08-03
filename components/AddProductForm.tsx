@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { TextField, Button, Box, Typography, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, Snackbar, Alert } from '@mui/material';
+import { TextField, Button, Box, Typography, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { useProducts } from '../hooks/useProducts';
 import ImageCapture from './ImageCapture';
 import { scanProduct } from '../utils/visionUtils';
-import { useAuth } from '../hooks/useAuth';
 
 const AddProductForm = () => {
   const [name, setName] = useState('');
@@ -13,9 +12,7 @@ const AddProductForm = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [potentialLabels, setPotentialLabels] = useState<string[]>([]);
-  const [successOpen, setSuccessOpen] = useState(false);
   const { addProduct } = useProducts();
-  const { user } = useAuth();
 
   const handleImageCapture = async (imageData: string) => {
     console.log('Image data length:', imageData.length);
@@ -38,7 +35,7 @@ const AddProductForm = () => {
       setQuantity(result.quantity.toString());
       setPotentialLabels(result.allLabels || []);
       setShowConfirmation(true);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error scanning product:', error);
       setError('Failed to identify the product. Please try again or enter the details manually.');
     } finally {
@@ -52,31 +49,10 @@ const AddProductForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) {
-      setError('You must be logged in to add a product');
-      return;
-    }
-    setLoading(true);
-    setError(null);
-    try {
-      await addProduct({ name, quantity: parseInt(quantity, 10) });
-      console.log('Product added:', { name, quantity });
-      setName('');
-      setQuantity('');
-      setSuccessOpen(true);
-    } catch (error) {
-      console.error('Error in handleSubmit:', error);
-      setError('Failed to add product');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCloseSuccess = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setSuccessOpen(false);
+    await addProduct({ name, quantity: parseInt(quantity, 10) });
+    setName('');
+    setQuantity('');
+    setPrediction(null);
   };
 
   return (
@@ -138,12 +114,6 @@ const AddProductForm = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Snackbar open={successOpen} autoHideDuration={6000} onClose={handleCloseSuccess}>
-        <Alert onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }}>
-          Product added successfully!
-        </Alert>
-      </Snackbar>
     </Box>
   );
 };

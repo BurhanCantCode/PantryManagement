@@ -28,9 +28,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signIn = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Sign in error:', error);
-      throw error;
+      throw error instanceof Error ? error : new Error('An unexpected error occurred');
     }
   };
 
@@ -39,9 +39,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user);
       await incrementUserCount(); // Increment user count on successful sign-up
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Sign up error:', error);
-      throw error;
+      throw error instanceof Error ? error : new Error('An unexpected error occurred');
     }
   };
 

@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { auth } from '../utils/firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import { FirebaseError } from 'firebase/app';
 
 interface AuthModalProps {
   buttonText?: string;
@@ -19,7 +20,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ buttonText = "Sign In", fullWidth
   const { signIn, signUp } = useAuth();
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     try {
@@ -30,10 +31,20 @@ const AuthModal: React.FC<AuthModalProps> = ({ buttonText = "Sign In", fullWidth
       }
       setOpen(false);
       router.push('/'); // Redirect to the main page
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Authentication error:', error);
-      setError(error.message);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unexpected error occurred');
+      }
     }
+  };
+
+  // Helper function to extract error message
+  const getErrorMessage = (error: unknown): string => {
+    if (error instanceof Error) return error.message;
+    return String(error);
   };
 
   return (

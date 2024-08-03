@@ -7,6 +7,7 @@ import Layout from '../components/Layout';
 import { lightTheme, darkTheme } from '../styles/theme';
 import '../styles/globals.css';
 import { auth } from '../utils/firebaseConfig'; // Import auth
+import { Analytics } from '@vercel/analytics/react'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -31,6 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Layout toggleTheme={toggleTheme} isDarkMode={isDarkMode}>
           <Component {...pageProps} />
         </Layout>
+        <Analytics />
       </ThemeProvider>
     </AuthProvider>
   );

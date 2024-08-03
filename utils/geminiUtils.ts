@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
+const genAI = new GoogleGenerativeAI(process.env.API_KEY!);
 
 export const scanProduct = async (imageData: string): Promise<{ name: string; quantity: number }> => {
   try {
@@ -14,8 +14,8 @@ export const scanProduct = async (imageData: string): Promise<{ name: string; qu
     
     const parsedResult = JSON.parse(text);
     return { name: parsedResult.name, quantity: parsedResult.quantity };
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error in scanProduct:', error);
-    throw error;
+    throw new Error(`Failed to scan product: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 };

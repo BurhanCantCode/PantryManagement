@@ -12,9 +12,9 @@ export const getProducts = async (userId: string): Promise<Product[]> => {
     const q = query(collection(db, COLLECTION_NAME), where("userId", "==", userId));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error in getProducts:', error);
-    throw error;
+    throw error instanceof Error ? error : new Error('Failed to get products');
   }
 };
 
@@ -22,9 +22,9 @@ export const addProduct = async (userId: string, product: Omit<Product, 'id'>): 
   try {
     const docRef = await addDoc(collection(db, COLLECTION_NAME), { ...product, userId });
     return { id: docRef.id, ...product };
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error adding product:', error);
-    throw error;
+    throw error instanceof Error ? error : new Error('Failed to add product');
   }
 };
 

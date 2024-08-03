@@ -16,6 +16,8 @@
         "@google/generative-ai": "^0.16.0",
         "@mui/icons-material": "^5.16.6",
         "@mui/material": "^5.16.6",
+        "@vercel/analytics": "0.1.11",
+        "dotenv": "^16.4.5",
         "firebase": "^9.23.0",
         "framer-motion": "^11.3.19",
         "next": "12.3.4",

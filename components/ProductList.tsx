@@ -14,8 +14,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const ProductList: React.FC = () => {
-  const { products, updateProduct, removeProduct } = useProducts();
+const ProductList: React.FC<{ products: Product[] }> = ({ products }) => {
+  const { updateProduct, removeProduct } = useProducts();
   const { user } = useAuth();
   const router = useRouter();
   const [successOpen, setSuccessOpen] = useState(false);

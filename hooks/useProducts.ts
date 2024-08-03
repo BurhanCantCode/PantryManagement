@@ -19,9 +19,9 @@ export const useProducts = () => {
       const fetchedProducts = await getProducts(user.uid);
       setProducts(fetchedProducts);
       setLoading(false);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error fetching products:', err);
-      setError(`Failed to fetch products: ${err.message}`);
+      setError(`Failed to fetch products: ${err instanceof Error ? err.message : 'Unknown error'}`);
       setLoading(false);
     }
   }, [user]);
@@ -38,10 +38,10 @@ export const useProducts = () => {
     try {
       const newProduct = await addProductToFirebase(user.uid, product);
       setProducts(prevProducts => [...prevProducts, newProduct]);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error adding product:', err);
       setError('Failed to add product');
-      throw err;
+      throw err instanceof Error ? err : new Error('Failed to add product');
     }
   };
 
@@ -55,7 +55,7 @@ export const useProducts = () => {
       setProducts(prevProducts =>
         prevProducts.map(p => p.id === id ? { ...p, quantity } : p)
       );
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error updating product:', err);
       setError('Failed to update product');
     }
@@ -69,7 +69,7 @@ export const useProducts = () => {
     try {
       await removeProductFromFirebase(user.uid, id);
       setProducts(prevProducts => prevProducts.filter(p => p.id !== id));
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error removing product:', err);
       setError('Failed to remove product');
     }
