@@ -1,25 +1,26 @@
 import { NextPage } from 'next';
-import { Typography, Button, Box, Paper, Container, TextField, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, Snackbar, Alert } from '@mui/material';
-import AuthModal from '../components/AuthModal';
+import { Typography, Box, Paper, Tabs, Tab } from '@mui/material';
 import { FaLock } from 'react-icons/fa';
 import { useAuth } from '../hooks/useAuth';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useProducts } from '../hooks/useProducts';
-import ImageCapture from '../components/ImageCapture';
-import { scanProduct } from '../utils/visionUtils';
+import AuthModal from '../components/AuthModal';
 import PasswordReset from '../components/PasswordReset';
 
 const Login: NextPage = () => {
   const { user, redirectAfterAuth } = useAuth();
   const router = useRouter();
+  const [tabIndex, setTabIndex] = useState(0);
 
   useEffect(() => {
     if (user) {
       redirectAfterAuth();
     }
   }, [user, redirectAfterAuth]);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue);
+  };
 
   return (
     <Box sx={{ 
@@ -37,8 +38,12 @@ const Login: NextPage = () => {
         <Typography variant="body1" color="textSecondary" paragraph>
           Sign in to manage your pantry, reduce waste, and never run out of essentials.
         </Typography>
-        <AuthModal />
-        <PasswordReset />
+        <Tabs value={tabIndex} onChange={handleTabChange} centered>
+          <Tab label="Sign In" />
+          <Tab label="Reset Password" />
+        </Tabs>
+        {tabIndex === 0 && <AuthModal />}
+        {tabIndex === 1 && <PasswordReset />}
       </Paper>
     </Box>
   );
