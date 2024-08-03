@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import AuthModal from '../components/AuthModal';
 import PasswordReset from '../components/PasswordReset';
+import SignUp from '../components/SignUp';
 
 const Login: NextPage = () => {
   const { user, redirectAfterAuth } = useAuth();
@@ -40,10 +41,12 @@ const Login: NextPage = () => {
         </Typography>
         <Tabs value={tabIndex} onChange={handleTabChange} centered>
           <Tab label="Sign In" />
-          <Tab label="Reset Password" />
+          <Tab label="Sign Up" />
+          <Tab label="Forgot Password" />
         </Tabs>
         {tabIndex === 0 && <AuthModal />}
-        {tabIndex === 1 && <PasswordReset />}
+        {tabIndex === 1 && <SignUp />}
+        {tabIndex === 2 && <PasswordReset />}
       </Paper>
     </Box>
   );
