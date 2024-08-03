@@ -1,6 +1,6 @@
 import vision from '@google-cloud/vision';
 
-let client: vision.ImageAnnotatorClient;
+let client: any;
 
 try {
   const credentials = {
