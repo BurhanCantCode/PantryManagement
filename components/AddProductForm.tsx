@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { TextField, Button, Box, Typography, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, Snackbar, Alert } from '@mui/material';
+import { TextField, Button, Box, Typography, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, Snackbar, Alert, Paper } from '@mui/material';
 import { useProducts } from '../hooks/useProducts';
 import ImageCapture from '../components/ImageCapture';
 import { scanProduct } from '../utils/visionUtils';
+import InfoBox from '../components/InfoBox';
 
 const AddProductForm = () => {
   const [name, setName] = useState('');
@@ -58,71 +59,74 @@ const AddProductForm = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-      <ImageCapture onImageCapture={handleImageCapture} />
-      {loading && <CircularProgress sx={{ mt: 2 }} />}
-      {error && (
-        <Typography color="error" sx={{ mt: 2 }}>
-          {error}
-        </Typography>
-      )}
-      {potentialLabels.length > 0 && (
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="subtitle1">Potential products:</Typography>
-          <ul>
-            {potentialLabels.map((label, index) => (
-              <li key={index}>
-                <Button onClick={() => setName(label)}>{label}</Button>
-              </li>
-            ))}
-          </ul>
-        </Box>
-      )}
-      <TextField
-        label="Product Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        label="Quantity"
-        type="number"
-        value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
-        required
-        fullWidth
-        margin="normal"
-      />
-      <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-        Add Product
-      </Button>
-
-      <Dialog open={showConfirmation} onClose={() => setShowConfirmation(false)}>
-        <DialogTitle>Confirm Product Details</DialogTitle>
-        <DialogContent>
-          <Typography>
-            Identified Product: {prediction?.name}
+    <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
+      <InfoBox />
+      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <ImageCapture onImageCapture={handleImageCapture} />
+        {loading && <CircularProgress sx={{ mt: 2 }} />}
+        {error && (
+          <Typography color="error" sx={{ mt: 2 }}>
+            {error}
           </Typography>
-          <Typography>
-            Suggested Quantity: {prediction?.quantity}
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowConfirmation(false)}>Edit</Button>
-          <Button onClick={handleConfirm} variant="contained" color="primary">
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
+        )}
+        {potentialLabels.length > 0 && (
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="subtitle1">Potential products:</Typography>
+            <ul>
+              {potentialLabels.map((label, index) => (
+                <li key={index}>
+                  <Button onClick={() => setName(label)}>{label}</Button>
+                </li>
+              ))}
+            </ul>
+          </Box>
+        )}
+        <TextField
+          label="Product Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Quantity"
+          type="number"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          required
+          fullWidth
+          margin="normal"
+        />
+        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+          Add Product
+        </Button>
 
-      <Snackbar open={success} autoHideDuration={6000} onClose={() => setSuccess(false)}>
-        <Alert onClose={() => setSuccess(false)} severity="success" sx={{ width: '100%' }}>
-          Product added successfully!
-        </Alert>
-      </Snackbar>
-    </Box>
+        <Dialog open={showConfirmation} onClose={() => setShowConfirmation(false)}>
+          <DialogTitle>Confirm Product Details</DialogTitle>
+          <DialogContent>
+            <Typography>
+              Identified Product: {prediction?.name}
+            </Typography>
+            <Typography>
+              Suggested Quantity: {prediction?.quantity}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowConfirmation(false)}>Edit</Button>
+            <Button onClick={handleConfirm} variant="contained" color="primary">
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Snackbar open={success} autoHideDuration={6000} onClose={() => setSuccess(false)}>
+          <Alert onClose={() => setSuccess(false)} severity="success" sx={{ width: '100%' }}>
+            Product added successfully!
+          </Alert>
+        </Snackbar>
+      </Box>
+    </Paper>
   );
 };
 
