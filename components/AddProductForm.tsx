@@ -3,7 +3,6 @@ import { TextField, Button, Box, Typography, CircularProgress, Dialog, DialogTit
 import { useProducts } from '../hooks/useProducts';
 import ImageCapture from '../components/ImageCapture';
 import { scanProduct } from '../utils/visionUtils';
-import InfoBox from '../components/InfoBox';
 
 const AddProductForm = () => {
   const [name, setName] = useState('');
@@ -60,7 +59,6 @@ const AddProductForm = () => {
 
   return (
     <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
-      <InfoBox />
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <ImageCapture onImageCapture={handleImageCapture} />
         {loading && <CircularProgress sx={{ mt: 2 }} />}
