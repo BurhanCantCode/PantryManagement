@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import { Container, Typography, Box, Paper } from '@mui/material';
 import AddProductForm from '../components/AddProductForm';
-import ScanProductButton from '../components/ScanProductButton';
 import InfoBox from '../components/InfoBox';
 
 const AddProduct: NextPage = () => {
@@ -11,7 +10,6 @@ const AddProduct: NextPage = () => {
         Add New Product
       </Typography>
       <InfoBox />
-      <ScanProductButton />
       <AddProductForm />
     </Container>
   );
