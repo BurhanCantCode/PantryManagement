@@ -2,7 +2,7 @@
 
 Welcome to **Pantry Manager**! This application helps you efficiently manage your pantry, reduce waste, and ensure you never run out of essentials. With features like product scanning, inventory management, and user authentication, Pantry Manager is your go-to solution for keeping track of your pantry items.
 
-![Pantry Manager](https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif)
+![Pantry Manager](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjNwcTQ5MThxc3pvejZncHh6a3VucnFmMjA0N2J6dnlmbDcwejVxdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT8qBsOjMOcdeGJIU8/giphy.gif)
 
 ## Features
 
@@ -61,21 +61,21 @@ Welcome to **Pantry Manager**! This application helps you efficiently manage you
 2. Use the webcam or upload an image to scan the product.
 3. Confirm the product details and add it to your inventory.
 
-![Add Product](https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif)
+
 
 ### Viewing Inventory
 
 1. Navigate to the "Inventory" page.
 2. View the list of products, update quantities, or delete items.
 
-![View Inventory](https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif)
+
 
 ### User Authentication
 
 1. Sign up for a new account or sign in with existing credentials.
 2. Reset your password if needed.
 
-![User Authentication](https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif)
+![User Authentication](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHB4MmQ2NjFndHViaG5uMWNmNHdwdm9sNXo5aTF0Y3Q4cTg3ZW8yMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FnGJfc18tDDHy/giphy.gif)
 
 ## Contributing
 
